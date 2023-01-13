@@ -139,7 +139,7 @@ class DQN(RLAlgorithm):
         """
         if not self._eval_env:
             self._eval_env = trainer.get_env_copy()
-        last_returns = [float('nan')]
+        last_returns = []#[float('nan')]
 
         if self._min_buffer_size > self.replay_buffer.n_transitions_stored:
             num_warmup_steps = (self._min_buffer_size -
@@ -208,7 +208,7 @@ class DQN(RLAlgorithm):
         if itr % self._steps_per_epoch == 0:
             self._log_eval_results(epoch)
 
-        if itr % self._target_update_freq == 0:
+        if itr and itr % self._target_update_freq == 0:
             self._target_qf = copy.deepcopy(self._qf)
 
     def _log_eval_results(self, epoch):

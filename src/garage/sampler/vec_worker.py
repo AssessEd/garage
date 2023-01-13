@@ -185,7 +185,8 @@ class VecWorker(DefaultWorker):
         for i, action in enumerate(actions):
             if self._episode_lengths[i] < self._max_episode_length:
                 es = self._envs[i].step(action)
-                self._observations[i].append(self._prev_obs[i])
+                self._observations[i].append(self._prev_obs[i].copy())
+                # self._observations[i].append(self._prev_obs[i])
                 self._rewards[i].append(es.reward)
                 self._actions[i].append(es.action)
                 for k, v in agent_info.items():

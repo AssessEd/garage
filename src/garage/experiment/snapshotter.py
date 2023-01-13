@@ -99,17 +99,17 @@ class Snapshotter:
         if self._snapshot_mode == 'all':
             file_name = os.path.join(self._snapshot_dir, 'itr_%d.pkl' % itr)
         elif self._snapshot_mode == 'gap_overwrite':
-            if itr % self._snapshot_gap == 0:
+            if itr and itr % self._snapshot_gap == 0: # added itr and 
                 file_name = os.path.join(self._snapshot_dir, 'params.pkl')
         elif self._snapshot_mode == 'last':
             # override previous params
             file_name = os.path.join(self._snapshot_dir, 'params.pkl')
         elif self._snapshot_mode == 'gap':
-            if itr % self._snapshot_gap == 0:
+            if itr and itr % self._snapshot_gap == 0:# added itr and 
                 file_name = os.path.join(self._snapshot_dir,
                                          'itr_%d.pkl' % itr)
         elif self._snapshot_mode == 'gap_and_last':
-            if itr % self._snapshot_gap == 0:
+            if itr and itr % self._snapshot_gap == 0: # added itr and 
                 file_name = os.path.join(self._snapshot_dir,
                                          'itr_%d.pkl' % itr)
             file_name_last = os.path.join(self._snapshot_dir, 'params.pkl')

@@ -1045,7 +1045,10 @@ def check_timestep_batch(batch, array_type, ignored_fields=()):
                         f'but must match the observation_space '
                         f'{env_spec.observation_space}')
                 if (isinstance(value[0], np.ndarray)
-                        and not env_spec.observation_space.contains(value[0])):
+                        and not env_spec.observation_space.contains(value[0]) 
+                        or # original state is a matrix but the warning would've beed raised without the second option
+                        (np.prod(env_spec.observation_space.shape) == np.prod(value[0].shape)
+                         and not env_spec.observation_space.contains(value[0].reshape(env_spec.observation_space.shape)))):                    
                     warnings.warn(
                         f'Observation {value[0]!r} is outside '
                         f'observation_space {env_spec.observation_space}')

@@ -277,7 +277,10 @@ class Trainer:
 
         # Save states
         params['env'] = self._env
-        params['algo'] = self._algo
+        # not saving the replay buffer to make checkpoints lighter
+        tmp = self._algo.replay_buffer
+        self._algo.replay_buffer = None
+        params['algo'] = self._algo        
         params['n_workers'] = self._n_workers
         params['worker_class'] = self._worker_class
         params['worker_args'] = self._worker_args
@@ -285,6 +288,7 @@ class Trainer:
         self._snapshotter.save_itr_params(epoch, params)
 
         logger.log('Saved')
+        self._algo.replay_buffer = tmp
 
     def restore(self, from_dir, from_epoch='last'):
         """Restore experiment from snapshot.
